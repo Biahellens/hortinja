@@ -8,8 +8,8 @@ const app = express()
 app.use(express.json())
 
 // rotas
-app.get("/", (request: Request, response: Response) => {
-  response.json("OK")
+app.get('/', (request: Request, response: Response) => {
+  response.json('OK')
 })
 
 const http = createServer(app)
