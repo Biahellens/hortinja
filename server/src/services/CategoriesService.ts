@@ -9,6 +9,10 @@ interface ICategory {
   updated_at?: Date
 }
 
+interface IMessage {
+  message: string
+}
+
 class CategoriesService {
   private categoriesRepository: Repository<Category>
 
@@ -34,6 +38,62 @@ class CategoriesService {
       await this.categoriesRepository.save(category)
 
       return category
+    } catch (error) {
+      return error
+    }
+  }
+
+  async show(id: string): Promise<ICategory | undefined> {
+    try {
+      const category = await this.categoriesRepository.findOne({
+        id,
+      })
+
+      return category
+    } catch (error) {
+      return error
+    }
+  }
+
+  async index(): Promise<ICategory[]> {
+    try {
+      const categories = await this.categoriesRepository.find()
+
+      return categories
+    } catch (error) {
+      return error
+    }
+  }
+
+  async updated(id: string, params: ICategory): Promise<IMessage | undefined> {
+    try {
+      await this.categoriesRepository
+        .createQueryBuilder()
+        .update(Category)
+        .set({ name: params.name })
+        .where('id = :id', { id })
+        .execute()
+
+      return {
+        message: `A categoria referente ao id ${id} foi atualizada com sucesso`,
+      }
+    } catch (error) {
+      return error
+    }
+  }
+
+  async delete(id: string): Promise<IMessage | undefined> {
+    try {
+      await this.categoriesRepository
+        .createQueryBuilder()
+        .delete()
+        .from(Category)
+        .where('id = :id', { id })
+        .execute()
+
+      return {
+        message: `A categoria referente ao id ${id} foi removida com sucesso`,
+      }
     } catch (error) {
       return error
     }
