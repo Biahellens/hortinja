@@ -1,13 +1,7 @@
 import { getCustomRepository, Repository } from 'typeorm'
+import { validate } from 'class-validator'
 import { Category } from '../entities'
 import { CategoriesRepository } from '../repositories'
-
-interface ICategory {
-  id?: string
-  name: string
-  created_at?: Date
-  updated_at?: Date
-}
 
 interface IMessage {
   message: string
@@ -20,82 +14,63 @@ class CategoriesService {
     this.categoriesRepository = getCustomRepository(CategoriesRepository)
   }
 
-  async create(params: ICategory): Promise<ICategory> {
-    try {
-      // verifica se a categoria existe
-      const categoryExists = await this.categoriesRepository.findOne({
-        name: params.name,
-      })
+  async create(params: Category): Promise<Category> {
+    // verifica se a categoria existe
+    const categoryExists = await this.categoriesRepository.findOne({
+      name: params.name,
+    })
 
-      if (categoryExists) {
-        return categoryExists
-      }
+    if (categoryExists) return categoryExists
 
-      const category = this.categoriesRepository.create({
-        name: params.name,
-      })
+    const category = this.categoriesRepository.create({
+      name: params.name,
+    })
 
-      await this.categoriesRepository.save(category)
+    const errors = await validate(category)
+    if (errors.length > 0) throw errors
 
-      return category
-    } catch (error) {
-      return error
-    }
+    await this.categoriesRepository.save(category)
+
+    return category
   }
 
-  async show(id: string): Promise<ICategory | undefined> {
-    try {
-      const category = await this.categoriesRepository.findOne({
-        id,
-      })
+  async show(id: string): Promise<Category> {
+    const category = await this.categoriesRepository.findOne({
+      id,
+    })
 
-      return category
-    } catch (error) {
-      return error
-    }
+    if (category) return category
+
+    throw new Error(`Não foi encontrado a categoria do id ${id}!`)
   }
 
-  async index(): Promise<ICategory[]> {
-    try {
-      const categories = await this.categoriesRepository.find()
-
-      return categories
-    } catch (error) {
-      return error
-    }
+  async index(): Promise<Category[]> {
+    return await this.categoriesRepository.find()
   }
 
-  async updated(id: string, params: ICategory): Promise<IMessage | undefined> {
-    try {
-      await this.categoriesRepository
-        .createQueryBuilder()
-        .update(Category)
-        .set({ name: params.name })
-        .where('id = :id', { id })
-        .execute()
+  async updated(id: string, params: Category): Promise<Category> {
+    const category = await this.categoriesRepository.findOne(id)
 
-      return {
-        message: `A categoria referente ao id ${id} foi atualizada com sucesso`,
-      }
-    } catch (error) {
-      return error
-    }
+    if (!category)
+      throw new Error(`Não foi encontrado a categoria do id ${id}!`)
+
+    const result = this.categoriesRepository.merge(category, params)
+    const errors = await validate(result)
+    if (errors.length > 0) throw errors
+    await this.categoriesRepository.update(id, category)
+    return category
   }
 
   async delete(id: string): Promise<IMessage | undefined> {
-    try {
-      await this.categoriesRepository
-        .createQueryBuilder()
-        .delete()
-        .from(Category)
-        .where('id = :id', { id })
-        .execute()
+    const category = await this.categoriesRepository.findOne(id)
 
-      return {
-        message: `A categoria referente ao id ${id} foi removida com sucesso`,
-      }
-    } catch (error) {
-      return error
+    if (!category)
+      throw new Error(`Não foi encontrado a categoria do id ${id}!`)
+
+    await this.categoriesRepository.delete(id)
+
+    return {
+      message: `A categoria referente ao id ${id} foi removida com sucesso`,
     }
   }
 }
