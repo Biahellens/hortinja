@@ -1,4 +1,4 @@
-import { getCustomRepository, Repository } from 'typeorm'
+import { getCustomRepository, Repository, FindManyOptions } from 'typeorm'
 import { validate } from 'class-validator'
 import { Horticultural } from '../entities'
 import { HorticulturesRepository } from '../repositories'
@@ -7,8 +7,36 @@ interface IMessage {
   message: string
 }
 
+interface IQueryIndex {
+  category_id?: string | number
+  name?: string
+}
+
 class HorticulturesService {
   private horticulturesRepository: Repository<Horticultural>
+  private filterIndex(
+    query: IQueryIndex
+  ): FindManyOptions<Horticultural> | undefined {
+    let queryParams: FindManyOptions<Horticultural> = {
+      order: { name: 'ASC' },
+    }
+
+    if (query?.category_id) {
+      queryParams = {
+        ...queryParams,
+        where: { category: query.category_id },
+      }
+    }
+
+    if (query?.name) {
+      queryParams = {
+        ...queryParams,
+        where: { name: query.name },
+      }
+    }
+
+    return queryParams
+  }
 
   constructor() {
     this.horticulturesRepository = getCustomRepository(HorticulturesRepository)
@@ -53,8 +81,9 @@ class HorticulturesService {
     )
   }
 
-  async index(): Promise<Horticultural[]> {
-    return await this.horticulturesRepository.find()
+  async index(query: IQueryIndex): Promise<Horticultural[]> {
+    const filterParams = this.filterIndex(query)
+    return await this.horticulturesRepository.find(filterParams)
   }
 
   async updated(id: string, params: Horticultural): Promise<Horticultural> {
