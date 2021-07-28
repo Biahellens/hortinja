@@ -45,7 +45,10 @@ class CategoriesService {
   }
 
   async index(): Promise<Category[]> {
-    return await this.categoriesRepository.find()
+    return await this.categoriesRepository.find({
+      relations: ['horticultures'],
+      order: { name: 'ASC' },
+    })
   }
 
   async updated(id: string, params: Category): Promise<Category> {

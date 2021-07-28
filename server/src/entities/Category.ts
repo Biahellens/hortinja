@@ -4,8 +4,11 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
+  OneToMany,
 } from 'typeorm'
 import { IsNotEmpty, IsString } from 'class-validator'
+
+import { Horticultural } from './Horticultural'
 
 @Entity('categories')
 class Category {
@@ -22,6 +25,9 @@ class Category {
 
   @UpdateDateColumn()
   updated_at?: Date
+
+  @OneToMany(() => Horticultural, (horticultural) => horticultural.category)
+  horticultures?: Horticultural[]
 }
 
 export { Category }
