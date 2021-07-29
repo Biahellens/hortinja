@@ -30,9 +30,14 @@ class HorticulturesController {
 
   async index(request: Request, response: Response): Promise<Response> {
     try {
+      const { category_id } = request.params
       const { query } = request
+
       const horticulturesService = new HorticulturesService()
-      const horticultures = await horticulturesService.index(query)
+      const horticultures = await horticulturesService.index({
+        ...query,
+        category_id,
+      })
 
       return response.json(horticultures)
     } catch (error) {

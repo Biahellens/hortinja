@@ -8,30 +8,23 @@ interface IMessage {
 }
 
 interface IQueryIndex {
-  category_id?: string | number
+  category_id: string
   name?: string
 }
 
 class HorticulturesService {
   private horticulturesRepository: Repository<Horticultural>
-  private filterIndex(
-    query: IQueryIndex
-  ): FindManyOptions<Horticultural> | undefined {
+  private filterIndexQuery(query: IQueryIndex): FindManyOptions<Horticultural> {
     let queryParams: FindManyOptions<Horticultural> = {
-      order: { name: 'ASC' },
-    }
-
-    if (query?.category_id) {
-      queryParams = {
-        ...queryParams,
-        where: { category: query.category_id },
-      }
+      where: { category: query.category_id },
     }
 
     if (query?.name) {
       queryParams = {
         ...queryParams,
-        where: { name: query.name },
+        where: {
+          name: query.name,
+        },
       }
     }
 
@@ -82,8 +75,7 @@ class HorticulturesService {
   }
 
   async index(query: IQueryIndex): Promise<Horticultural[]> {
-    const filterParams = this.filterIndex(query)
-    return await this.horticulturesRepository.find(filterParams)
+    return await this.horticulturesRepository.find(this.filterIndexQuery(query))
   }
 
   async updated(id: string, params: Horticultural): Promise<Horticultural> {

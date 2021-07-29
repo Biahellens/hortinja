@@ -17,10 +17,25 @@ routes.put('/categories/:id', categoriesController.update)
 routes.delete('/categories/:id', categoriesController.delete)
 
 // horticultures
-routes.post('/horticultures', horticulturesController.create)
-routes.get('/horticultures/:id', horticulturesController.show)
-routes.get('/horticultures', horticulturesController.index)
-routes.put('/horticultures/:id', horticulturesController.update)
-routes.delete('/horticultures/:id', horticulturesController.delete)
+routes.post(
+  '/categories/:category_id/horticultures',
+  horticulturesController.create
+)
+routes.get(
+  '/categories/:category_id/horticultures/:id',
+  horticulturesController.show
+)
+routes.get(
+  '/categories/:category_id/horticultures',
+  horticulturesController.index
+)
+routes.put(
+  '/categories/:category_id/horticultures/:id',
+  horticulturesController.update
+)
+routes.delete(
+  '/categories/:category_id/horticultures/:id',
+  horticulturesController.delete
+)
 
 export { routes }
