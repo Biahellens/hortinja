@@ -1,12 +1,11 @@
 import { ThemeOptions } from '@material-ui/core/styles'
 
 import {
-  CardProps as CardPropsMI,
   CardContentProps as CardContentPropsMI,
   TypographyProps as TypographyPropsMI
 } from '@material-ui/core'
 
-export type CardProps = CardPropsMI & {
+export type CardProps = {
   theme: ThemeOptions
 }
 
