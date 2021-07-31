@@ -1,28 +1,7 @@
-import { ThemeOptions } from '@material-ui/core/styles'
+import { CardHorticulturalProps } from '../../components/CardHorticultural/interface'
 
-export interface HomeProps {
-theme: ThemeOptions
-}
-
-export interface ModalAddProps {
-  theme: ThemeOptions
-  modalHorticultural: CardHorticulturalProps
-}
-
-export interface CardCategoryProps {
+export interface CategoryProps {
   id: string
   name: string
   cardHorticulturies: [CardHorticulturalProps]
-}
-
-export interface CardHorticulturalProps {
-  id: string
-  name: string
-  category: string
-  shade?: string
-  image: string
-  description?: string
-  average_price: number
-  measurement: string
-  benefits?: string
 }
