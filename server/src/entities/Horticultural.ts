@@ -49,6 +49,10 @@ class Horticultural {
   @IsString()
   measurement!: string
 
+  @Column()
+  @IsString()
+  benefits?: string
+
   @CreateDateColumn()
   created_at?: Date
 

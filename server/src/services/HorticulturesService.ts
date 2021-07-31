@@ -52,6 +52,7 @@ class HorticulturesService {
       description: params.description,
       average_price: params.average_price,
       measurement: params.measurement,
+      benefits: params.benefits,
     })
 
     const errors = await validate(horticultural)

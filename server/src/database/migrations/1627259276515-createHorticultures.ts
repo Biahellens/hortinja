@@ -45,6 +45,10 @@ export class horticultures1627259276515 implements MigrationInterface {
             type: 'varchar',
           },
           {
+            name: 'benefits',
+            type: 'varchar',
+          },
+          {
             name: 'created_at',
             type: 'timestamp',
             default: 'now()',
