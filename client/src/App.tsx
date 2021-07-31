@@ -1,16 +1,16 @@
-import React from 'react';
+import React from 'react'
 import { ThemeProvider } from '@material-ui/core/styles'
 
-import { Home } from './pages'
-import { lightTheme } from './utils/theme'
+import { ligthTheme } from './utils/theme'
 
-function App() {
+import { Routes } from './routes'
+
+function App(): JSX.Element {
   return (
-    <ThemeProvider theme={lightTheme}>
-      <Home />
+    <ThemeProvider theme={ligthTheme}>
+      <Routes />
     </ThemeProvider>
-
-  );
+  )
 }
 
-export default App;
+export default App

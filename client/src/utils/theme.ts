@@ -1,6 +1,6 @@
-import { createMuiTheme } from '@material-ui/core/styles'
+import { createTheme } from '@material-ui/core/styles'
 
-export const lightTheme = createMuiTheme({
+export const ligthTheme = createTheme({
   breakpoints: {
     values: {
       xs: 0,
@@ -8,7 +8,7 @@ export const lightTheme = createMuiTheme({
       md: 960,
       lg: 1280,
       xl: 1920,
-    }
+    },
   },
   palette: {
     primary: {
@@ -25,6 +25,6 @@ export const lightTheme = createMuiTheme({
 
     error: {
       main: '#DB4444',
-    }
-  }
+    },
+  },
 })
