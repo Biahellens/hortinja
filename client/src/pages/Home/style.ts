@@ -12,5 +12,4 @@ export const Wrapper = styled(Flex)`
   justify-content: center;
 `
 
-export const Container = styled(Box)<BoxProps>`
-`
+export const Container = styled(Box)<BoxProps>``
