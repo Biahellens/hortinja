@@ -1,6 +1,7 @@
 import express from 'express'
 import { Request, Response } from 'express'
 import { createServer } from 'http'
+import cors from 'cors'
 
 // iniciando configuracoes
 import './database'
@@ -10,6 +11,7 @@ const app = express()
 
 // seta configuracoes
 app.use(express.json())
+app.use(cors({ origin: true }))
 app.use(routes)
 
 // rotas
