@@ -1,6 +1,5 @@
 export { CardHorticultural } from './CardHorticultural'
 export { CardInfo } from './CardInfo'
-export { SelectField } from './SelectField'
 export { ToolbarHome } from './ToolbarHome'
 export { BlockHorticulturies } from './BlockHorticulturies'
 export { ModalHorticultural } from './ModalHorticultural'

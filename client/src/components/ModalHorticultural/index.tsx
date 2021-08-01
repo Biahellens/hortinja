@@ -1,17 +1,53 @@
 import React, { FC, useEffect, useState } from 'react'
+import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 
 // interfaces
 import { ModalProps } from './interface'
 
 //componentes
-import { Button, CardMedia, DialogContentText, Modal } from '@material-ui/core'
-import { Card, Typography } from './style'
+import { Modal } from '@material-ui/core'
+import { Flex } from 'reflexbox'
+import { Card } from './style'
+import { HeaderShow, ContentShow, FooterShow } from './content/Show'
+import {
+  HeaderModified,
+  ContentModified,
+  FooterModified,
+} from './content/Modified'
 
 // image
 import Background from '../../assets/Images/Background_modal.png'
 
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    paper: {
+      position: 'absolute',
+      width: 400,
+      backgroundColor: theme.palette.background.paper,
+      padding: theme.spacing(2, 4, 3),
+      borderRadius: 20,
+    },
+  })
+)
+
+function rand() {
+  return Math.round(Math.random() * 20) - 10
+}
+
+function getModalStyle() {
+  const top = 50 + rand()
+  const left = 50 + rand()
+
+  return {
+    top: `${top}%`,
+    left: `${left}%`,
+    transform: `translate(-${top}%, -${left}%)`,
+  }
+}
+
 export const ModalHorticultural: FC<ModalProps> = ({
   isEdit = false,
+  newResource = false,
   average_price,
   category,
   id,
@@ -24,109 +60,64 @@ export const ModalHorticultural: FC<ModalProps> = ({
   open = false,
   handleClose,
 }: ModalProps) => {
+  const [modalStyle] = useState(getModalStyle)
+  const classes = useStyles()
   const [showMode, setShowMode] = useState(true)
-  const [newResource, setNewResource] = useState(true)
 
   useEffect(() => {
-    if (open && isEdit) {
+    if (open && (isEdit || newResource)) {
       setShowMode(false)
-    }
-
-    if (id) {
-      setNewResource(false)
     }
   }, [open])
 
   return (
-    <Modal
-      id={id}
-      open={open}
-      onClose={handleClose}
-      aria-labelledby="modal"
-      style={{
-        padding: '10vh',
-        position: 'absolute',
-        justifyContent: 'center',
-      }}
-    >
-      <CardMedia
-        id="modal"
-        image={Background}
-        style={{
-          width: '40vh',
-          height: '28vh',
-          borderRadius: '2vh',
-          alignContent: 'center',
-        }}
-      >
-        <img
-          src={image}
+    <Modal id={id} open={open} onClose={handleClose} aria-labelledby="modal">
+      <div style={modalStyle} className={classes.paper}>
+        <Flex
           style={{
-            marginTop: '5vh',
-            marginLeft: '2vh',
-            height: '10vh',
-            borderRadius: '5vh',
-          }}
-        />
-        <Typography variant="h4">{name}</Typography>
-
-        <Card
-          style={{
-            width: '30vh',
-            padding: '2vh',
-            position: 'relative',
-            marginTop: '5vh',
-            marginLeft: '2.5vh',
-            borderRadius: '2vh',
-            backgroundColor: '#ffffff',
+            backgroundImage: `url(${Background})`,
+            height: 150,
+            borderRadius: 20,
           }}
         >
-          <DialogContentText>
-            <Typography variant="h4">Tonalidade</Typography>
-            <Typography>{shade}</Typography>
+          {showMode ? (
+            <HeaderShow image={image} name={name} />
+          ) : (
+            <HeaderModified id={id} />
+          )}
+        </Flex>
 
-            <Typography variant="h4" style={{ marginTop: '2vh' }}>
-              Categoria
-            </Typography>
-            <Typography>---------</Typography>
+        <Flex style={{ justifyContent: 'center' }} mt={[10]} mx={[25]}>
+          <Card
+            style={{
+              padding: 15,
+              width: '100%',
+              borderRadius: 10,
+              backgroundColor: '#ffffff',
+            }}
+          >
+            {showMode ? (
+              <ContentShow
+                average_price={average_price}
+                benefits={benefits}
+                category={category}
+                description={description}
+                name={name}
+                shade={shade}
+                measurement={measurement}
+              />
+            ) : (
+              <ContentModified id={id} />
+            )}
+          </Card>
+        </Flex>
 
-            <Typography variant="h4" style={{ marginTop: '2vh' }}>
-              Benefícios Nutricionais
-            </Typography>
-            <Typography>{benefits}</Typography>
-
-            <Typography variant="h4" style={{ marginTop: '2vh' }}>
-              Descrição
-            </Typography>
-            <Typography>{description}</Typography>
-
-            <Typography variant="h4" style={{ marginTop: '2vh' }}>
-              Medida
-            </Typography>
-            <Typography>{measurement}</Typography>
-
-            <Typography variant="h4" style={{ marginTop: '2vh' }}>
-              Preço Médio de Mercado
-            </Typography>
-            <Typography>{average_price}</Typography>
-          </DialogContentText>
-        </Card>
-
-        <Button
-          onClick={() => handleClose}
-          style={{
-            marginLeft: '12vh',
-            marginTop: '5vh',
-            width: '12vh',
-            height: '4vh',
-            color: '#FFFF',
-            backgroundColor: '#111111',
-            borderRadius: '2vh',
-          }}
-        >
-          Fechar
-        </Button>
-      </CardMedia>
+        {showMode ? (
+          <FooterShow handleClose={handleClose} />
+        ) : (
+          <FooterModified id={id} handleClose={handleClose} />
+        )}
+      </div>
     </Modal>
   )
 }

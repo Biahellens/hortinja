@@ -13,14 +13,16 @@ export const ligthTheme = createTheme({
   palette: {
     primary: {
       main: '#006B5C',
-      light: '#D9D2CF',
       dark: '#757270',
     },
 
     secondary: {
       main: '#FBFAFA',
       light: '#FFFFFF 90%',
-      dark: '#111111',
+    },
+
+    text: {
+      primary: '#111111',
     },
 
     error: {
