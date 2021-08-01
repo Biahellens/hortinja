@@ -11,14 +11,18 @@ import {
   CardContent,
   Avatar,
   Typography,
+  IconButton,
 } from '@material-ui/core'
-import {} from './style'
 
 // Modais
 import { ModalHorticultural } from '../ModalHorticultural'
 
-//icons
+//imgs
 import Background from '../../assets/Images/Background_card.png'
+
+//icons
+import DeleteIcon from '@material-ui/icons/Delete'
+import EditIcon from '@material-ui/icons/Edit'
 
 export const CardHorticultural: FC<CardHorticulturalProps> = ({
   average_price,
@@ -30,9 +34,16 @@ export const CardHorticultural: FC<CardHorticulturalProps> = ({
   id,
 }: CardHorticulturalProps) => {
   const [statusModal, setStateModal] = useState(false)
+  const [editMode, setEditMode] = useState(false)
 
   function closeModal(): void {
     setStateModal(false)
+    setEditMode(false)
+  }
+
+  function openModalEdit() {
+    setEditMode(true)
+    setStateModal(true)
   }
 
   return (
@@ -40,17 +51,19 @@ export const CardHorticultural: FC<CardHorticulturalProps> = ({
       <Card
         style={{
           borderRadius: 25,
+          width: 320,
         }}
       >
         <CardContent
           style={{
+            backgroundImage: `url(${Background})`,
+            padding: 25,
             margin: 10,
             borderRadius: 25,
-            backgroundImage: `url(${Background})`,
           }}
         >
           <Flex flexWrap="wrap">
-            <Box width={[1, 1 / 2]}>
+            <Box width={[1, 1 / 3]}>
               <Avatar
                 src={image}
                 style={{
@@ -60,29 +73,49 @@ export const CardHorticultural: FC<CardHorticulturalProps> = ({
               />
             </Box>
             <Box width={[1, 1 / 2]} justifyContent="center" height="auto">
-              <Typography variant="h5">{name}</Typography>
+              <Typography variant="h4" color="secondary">
+                {name}
+              </Typography>
             </Box>
           </Flex>
         </CardContent>
 
         <CardActionArea style={{ margin: 10, padding: 10 }}>
           <Flex flexWrap="wrap" onClick={() => setStateModal(true)}>
-            <Box width={[1]}>{name}</Box>
+            <Box width={[1]}>
+              <Typography variant="h5"> {name} </Typography>
+            </Box>
 
-            <Box width={[1]}>{description}</Box>
+            <Box width={[1]}>
+              <Typography variant="body1"> {description} </Typography>
+            </Box>
           </Flex>
         </CardActionArea>
 
         <CardContent>
           <Flex flexWrap="wrap">
-            <Box width={[1 / 2]}>{description}</Box>
-            <Box width={[1 / 4]}>{average_price}</Box>
-            <Box width={[1 / 4]}>{measurement}</Box>
+            <Box width={[1 / 2]}>
+              <IconButton>
+                <DeleteIcon fontSize="medium" color="error" />
+              </IconButton>
+              <IconButton onClick={() => openModalEdit()}>
+                <EditIcon fontSize="medium" color="primary" />
+              </IconButton>
+            </Box>
+            <Box width={[1 / 4]}>
+              <Typography variant="h5" color="primary">
+                {average_price}
+              </Typography>
+            </Box>
+            <Box width={[1 / 4]}>
+              <Typography variant="h6"> {measurement} </Typography>
+            </Box>
           </Flex>
         </CardContent>
       </Card>
 
       <ModalHorticultural
+        isEdit={editMode}
         open={statusModal}
         handleClose={closeModal}
         average_price={average_price}

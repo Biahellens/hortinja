@@ -17,6 +17,7 @@ import { Container, Wrapper } from './style'
 
 //icone
 import AddIcon from '@material-ui/icons/Add'
+import EditIcon from '@material-ui/icons/Edit'
 
 // services
 import { specificAxios } from '../../services/api'
@@ -45,22 +46,16 @@ export const Home = (): JSX.Element => {
   }, [])
 
   return (
-    <Wrapper>
+    <Wrapper justifyContent="center">
       <Container>
         <ToolbarHome />
       </Container>
-      <Container
-        width={[1]}
-        padding={'10vh'}
-        mt={['5vh']}
-        ml={['16vh']}
-        alignItems="center"
-      >
+      <Container width={[1]} padding={'10vh'} mt={['5vh']}>
         <CardInfo />
       </Container>
       <Container width={[1]} padding={'8vh'} ml={['16vh']}>
         <Wrapper>
-          <Container width={[1 / 2, 1]} padding={[2]} textAlign="center">
+          <Container width={[1, 1 / 2]} padding={[2]} textAlign="center">
             <Button
               variant="contained"
               color="primary"
@@ -77,7 +72,7 @@ export const Home = (): JSX.Element => {
             </Button>
           </Container>
 
-          <Container width={[1 / 2, 1]} padding={[2]} textAlign="center">
+          <Container width={[1, 1 / 2]} padding={[2]} textAlign="center">
             <Button
               variant="contained"
               color="primary"
@@ -106,7 +101,12 @@ export const Home = (): JSX.Element => {
             <>
               {categories.map((category: CategoryProps) => (
                 <Container key={category.id} width={[1]}>
-                  <Typography variant="h3">{category.name}</Typography>
+                  <Typography variant="h3">
+                    {category.name}{' '}
+                    <IconButton>
+                      <EditIcon fontSize="large" />
+                    </IconButton>
+                  </Typography>
                   <BlockHorticulturies category_id={category.id} />
                 </Container>
               ))}
@@ -116,6 +116,7 @@ export const Home = (): JSX.Element => {
       )}
       <ModalHorticultural
         id="create"
+        newResource={true}
         open={stateModalHorticultural}
         handleClose={closeModal}
       />

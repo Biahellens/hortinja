@@ -22,7 +22,4 @@ export const Typography = styled(TypographyMI)<TypographyProps>`
   text-align: justify;
 `
 
-export const CardContent = styled(CardContentMI)<CardContentProps>`
-  background-image: url(${Background});
-  padding: 25;
-`
+export const CardContent = styled(CardContentMI)<CardContentProps>``

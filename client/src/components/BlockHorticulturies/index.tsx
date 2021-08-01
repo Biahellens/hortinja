@@ -43,7 +43,7 @@ export const BlockHorticulturies: FC<BlockHorticulturiesProps> = ({
       ) : (
         <Flex flexWrap="wrap">
           {horticulturies.map((horticultural: CardHorticulturalProps) => (
-            <Box key={horticultural.id} width={[1 / 4]} mx={[2]}>
+            <Box key={horticultural.id} width={[1 / 4, 1 / 6]} mx={[2]}>
               <CardHorticultural {...horticultural} />
             </Box>
           ))}
