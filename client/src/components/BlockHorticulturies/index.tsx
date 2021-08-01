@@ -1,6 +1,10 @@
 import React, { FC, useState, useEffect } from 'react'
 import { AxiosResponse } from 'axios'
 
+// components
+import { Flex, Box } from 'reflexbox'
+import { CardHorticultural } from '../CardHorticultural'
+
 // interfaces
 import { BlockHorticulturiesProps } from './interface'
 import { CardHorticulturalProps } from '../CardHorticultural/interface'
@@ -18,7 +22,7 @@ export const BlockHorticulturies: FC<BlockHorticulturiesProps> = ({
 
   useEffect(() => {
     specificAxios
-      .get(`/categories/${category_id}/horticulturies`)
+      .get(`/categories/${category_id}/horticultures`)
       .then(({ data }: AxiosResponse<CardHorticulturalProps[]>) => {
         sethorticulturies(data)
       })
@@ -29,5 +33,22 @@ export const BlockHorticulturies: FC<BlockHorticulturiesProps> = ({
         setLoading(false)
       })
   }, [])
-  return <>{loading ? <div>Carregando</div> : <div>Deu certo </div>}</>
+
+  return (
+    <>
+      {loading ? (
+        <div>Carregando</div>
+      ) : horticulturies && horticulturies.length === 0 ? (
+        <div>Sem Conteúdo</div>
+      ) : (
+        <Flex flexWrap="wrap">
+          {horticulturies.map((horticultural: CardHorticulturalProps) => (
+            <Box key={horticultural.id} width={[1 / 4]} mx={[2]}>
+              <CardHorticultural {...horticultural} />
+            </Box>
+          ))}
+        </Flex>
+      )}
+    </>
+  )
 }

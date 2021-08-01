@@ -2,25 +2,27 @@
 import styled from 'styled-components'
 
 // componentes
-import { Flex, Box } from 'reflexbox'
-
-// interfaces
-import { BoxProps } from 'reflexbox'
-
 import {
   Card as CardMI,
-  Typography as TypographyMI
+  Typography as TypographyMI,
+  CardContent as CardContentMI,
 } from '@material-ui/core'
 
-import { CardProps, TypographyProps } from './interface'
+// interfaces
+import { CardProps, TypographyProps, CardContentProps } from '@material-ui/core'
+
+import Background from '../../assets/Images/Background_card.png'
 
 export const CardImage = styled.div`
   height: '140vh';
 `
-export const Card = styled(CardMI)<CardProps>`
-  align-items: center;
-`
+export const Card = styled(CardMI)<CardProps>``
 
 export const Typography = styled(TypographyMI)<TypographyProps>`
   text-align: justify;
+`
+
+export const CardContent = styled(CardContentMI)<CardContentProps>`
+  background-image: url(${Background});
+  padding: 25;
 `

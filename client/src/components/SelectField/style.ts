@@ -6,7 +6,7 @@ import {
   Select as SelectMI,
   FormControl as FormControlMI,
   InputLabel as InputLabelMI,
-  FormHelperText as FormHelperTextMI
+  FormHelperText as FormHelperTextMI,
 } from '@material-ui/core'
 
 // interfaces
@@ -14,7 +14,7 @@ import {
   SelectProps,
   FormControlProps,
   InputLabelProps,
-  FormHelperTextProps
+  FormHelperTextProps,
 } from './interface'
 
 export const Select = styled(SelectMI)<SelectProps>`

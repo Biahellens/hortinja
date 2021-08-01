@@ -1,37 +1,26 @@
 // dependencies
-import React from 'react'
+import React, { FC } from 'react'
 
 // interfaces
 import { SelectProps } from './interface'
 
 // components
-import {
-  FormControl,
-  Select,
-  InputLabel,
-  FormHelperText
-} from './style'
+import { FormControl, Select, InputLabel, FormHelperText } from './style'
 
-export const SelectField = ({
+export const SelectField: FC<SelectProps> = ({
   id,
   autoWidth = true,
   error,
   label,
   children,
   ...rest
-  }: SelectProps) => {
-
+}: SelectProps) => {
   return (
     <FormControl variant="outlined" error={error}>
       <InputLabel id={id}>{label}</InputLabel>
-        <Select
-        labelId={id}
-        label={label}
-        autoWidth={autoWidth}
-        {...rest}
-        >
+      <Select labelId={id} label={label} autoWidth={autoWidth} {...rest}>
         {children}
-        </Select>
+      </Select>
       {error && <FormHelperText>Error</FormHelperText>}
     </FormControl>
   )

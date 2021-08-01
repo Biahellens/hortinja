@@ -1,22 +1,25 @@
 import React from 'react';
 
-import { CardHorticulturies, CardProps, CardHorticulturalProps } from '../interface'
-
 //componentes
 import {
   Button,
   CardActions,
   CardMedia,
   DialogContentText,
+  IconButton,
   Modal,
 } from '@material-ui/core'
 
 import { Card, Typography } from './style'
 
-//image
+  //image
 import Background from '../../../assets/Images/Background_modal.png'
+import alface from '../../../assets/Images/alface.png'
 
-export const ModalShow = ({theme, cardHorticultural}:CardHorticulturies) => {
+//icon
+import DeleteIcon from '@material-ui/icons/Delete'
+
+export const ModalDelete = () => {
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -30,31 +33,33 @@ export const ModalShow = ({theme, cardHorticultural}:CardHorticulturies) => {
   return (
     <div>
       <CardActions onClick={handleClickOpen}>
+        <IconButton aria-label="edit" size='small'>
+            <DeleteIcon />
+        </IconButton>
       </CardActions>
       <Modal open={open} onClose={handleClose} aria-labelledby="modalshow" style={{padding:'10vh', position:'absolute', justifyContent:'center'}}>
         <CardMedia id="modalshow" image={Background} style={{width:'40vh', height: '28vh', borderRadius: '2vh',  alignContent:'center'}}>
-          <img src={cardHorticultural.image} style={{marginTop:'5vh', marginLeft: '2vh', height: '10vh', borderRadius: '5vh',}} />
-          <Typography variant="h4">{cardHorticultural.name}</Typography>
+          <img src={alface} style={{marginTop:'5vh', marginLeft: '2vh', height: '10vh', borderRadius: '5vh',}} />
 
           <Card style={{width: '30vh', padding:'2vh', position:'relative', marginTop:'5vh', marginLeft:'2.5vh', borderRadius: '2vh', backgroundColor:'#ffffff'}} >
             <DialogContentText>
                 <Typography variant="h4">Tonalidade</Typography>
-                <Typography>{cardHorticultural.shade}</Typography>
+                <Typography>Número de registros da Horta</Typography>
 
                 <Typography variant="h4" style={{marginTop:'2vh'}}>Categoria</Typography>
-                <Typography>---------</Typography>
+                <Typography>-------------</Typography>
 
                 <Typography variant="h4" style={{marginTop:'2vh'}}>Benefícios Nutricionais</Typography>
-                <Typography>{cardHorticultural.benefits}</Typography>
+                <Typography>-------------</Typography>
 
                 <Typography variant="h4" style={{marginTop:'2vh'}}>Descrição</Typography>
-                <Typography>{cardHorticultural.description}</Typography>
+                <Typography>-------------</Typography>
 
                 <Typography variant="h4" style={{marginTop:'2vh'}}>Medida</Typography>
-                <Typography>{cardHorticultural.measurement}</Typography>
+                <Typography>-------------</Typography>
 
                 <Typography variant="h4" style={{marginTop:'2vh'}}>Preço Médio de Mercado</Typography>
-                <Typography>{cardHorticultural.average_price}</Typography>
+                <Typography>-------------</Typography>
             </DialogContentText>
             </Card>
 

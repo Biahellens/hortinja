@@ -1,5 +1,5 @@
 // dependencies
-import React from 'react'
+import React, { FC } from 'react'
 
 //componentes
 import { CardMedia, IconButton } from '@material-ui/core'
@@ -12,31 +12,70 @@ import AttachMoneySharpIcon from '@material-ui/icons/AttachMoneySharp'
 //image
 import Background from '../../assets/Images/Background_infos.png'
 
-
-export const CardInfo = () => {
+export const CardInfo: FC<any> = () => {
   return (
-        <CardMedia image={Background} style={{maxWidth:'80vh', height: '15vh', borderRadius: '2vh', alignItems:'center', display:'flex', justifyContent:'center'}}>
+    <CardMedia
+      image={Background}
+      style={{
+        maxWidth: '80vh',
+        height: '15vh',
+        borderRadius: '2vh',
+        alignItems: 'center',
+        display: 'flex',
+        justifyContent: 'center',
+      }}
+    >
+      <Card
+        style={{
+          width: '30vh',
+          padding: '2vh',
+          position: 'relative',
+          marginTop: '10vh',
+          marginRight: '2vh',
+          borderRadius: '2vh',
+          backgroundColor: '#ffffffb9',
+        }}
+      >
+        <Typography variant="h4">Registros</Typography>
+        <Typography>Número de registros da Horta</Typography>
 
-          <Card style={{width: '30vh', padding:'2vh', position:'relative', marginTop:'10vh', marginRight:'2vh', borderRadius: '2vh', backgroundColor:'#ffffffb9'}} >
-            <Typography variant="h4">Registros</Typography>
-            <Typography>Número de registros da Horta</Typography>
+        <IconButton>
+          <AssignmentSharpIcon fontSize="large" color="primary" />
+          <Typography
+            variant="h5"
+            color="textPrimary"
+            style={{ marginLeft: '2vh' }}
+          >
+            444
+          </Typography>
+        </IconButton>
+      </Card>
 
-            <IconButton>
-              <AssignmentSharpIcon fontSize="large" color='primary'/>
-              <Typography variant="h5" color='textPrimary' style={{marginLeft:'2vh'}}>444</Typography>
-            </IconButton>
+      <Card
+        style={{
+          width: '30vh',
+          padding: '2vh',
+          position: 'relative',
+          marginTop: '10vh',
+          marginLeft: '2vh',
+          borderRadius: '2vh',
+          backgroundColor: '#ffffffb9',
+        }}
+      >
+        <Typography variant="h4">Registros</Typography>
+        <Typography>Número de registros da Horta</Typography>
 
-          </Card>
-
-          <Card style={{width: '30vh', padding:'2vh', position:'relative', marginTop:'10vh', marginLeft:'2vh', borderRadius: '2vh', backgroundColor:'#ffffffb9'}} >
-            <Typography variant="h4">Registros</Typography>
-            <Typography>Número de registros da Horta</Typography>
-
-            <IconButton>
-              <AttachMoneySharpIcon fontSize="large" color='primary'/>
-              <Typography variant="h5" color='textPrimary' style={{marginLeft:'2vh'}}>R$ 1024,00</Typography>
-            </IconButton>
-          </Card>
-        </CardMedia>
-  );
+        <IconButton>
+          <AttachMoneySharpIcon fontSize="large" color="primary" />
+          <Typography
+            variant="h5"
+            color="textPrimary"
+            style={{ marginLeft: '2vh' }}
+          >
+            R$ 1024,00
+          </Typography>
+        </IconButton>
+      </Card>
+    </CardMedia>
+  )
 }

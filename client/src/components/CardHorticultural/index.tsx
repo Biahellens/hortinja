@@ -1,61 +1,76 @@
 // dependencies
-import React from 'react'
+import React, { FC } from 'react'
 
-//componentes
-import { CardActions, CardActionArea, CardContent, CardMedia, IconButton } from '@material-ui/core'
-import { Card, Typography } from './style'
+import { CardHorticulturalProps } from './interface'
 
-//Modais
-import { ModalShow } from './ModalShow'
+// componentes
+import { Flex, Box } from 'reflexbox'
+import {
+  Card,
+  CardActionArea,
+  CardContent,
+  Avatar,
+  Typography,
+} from '@material-ui/core'
+import {} from './style'
+
+// Modais
+// import { ModalEdit } from './ModalEdit'
 
 //icons
-import DeleteIcon from '@material-ui/icons/Delete'
-import EditIcon from '@material-ui/icons/Edit'
-
-//image
 import Background from '../../assets/Images/Background_card.png'
-import alface from '../../assets/Images/alface.png'
 
-
-export const CardHorticultural = () => {
-  const [modalShow] = React.useState(ModalShow);
-  const [open, setOpen] = React.useState(false);
-
-  const handleOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
+export const CardHorticultural: FC<CardHorticulturalProps> = ({
+  average_price,
+  measurement,
+  image,
+  name,
+  description,
+}: CardHorticulturalProps) => {
   return (
+    <Card
+      style={{
+        borderRadius: 25,
+      }}
+    >
+      <CardContent
+        style={{
+          margin: 10,
+          borderRadius: 25,
+          backgroundImage: `url(${Background})`,
+        }}
+      >
+        <Flex flexWrap="wrap">
+          <Box width={[1, 1 / 2]}>
+            <Avatar
+              src={image}
+              style={{
+                width: 50,
+                height: 50,
+              }}
+            />
+          </Box>
+          <Box width={[1, 1 / 2]} justifyContent="center" height="auto">
+            <Typography variant="h5">{name}</Typography>
+          </Box>
+        </Flex>
+      </CardContent>
 
-    <Card style={{maxHeight: '42vh', width: '34vh'}}>
-      <CardActionArea onClick={handleOpen}>
-        <CardMedia  image={Background} style={{margin: '1vh', maxWidth:'94%', height: '15vh', borderRadius: '2vh',}}>
-          <img src={alface} style={{margin: '2vh', height: '10vh', borderRadius: '5vh',}} />
-          <Typography variant="h6" color='secondary'>Alface</Typography>
-        </CardMedia>
+      <CardActionArea style={{ margin: 10, padding: 10 }}>
+        <Flex flexWrap="wrap">
+          <Box width={[1]}>{name}</Box>
 
-        <CardContent>
-
-          <Typography>A alface crespa é uma hortaliça folhosa muito popular entre os brasileiros. Costuma ser consumida crua, geralmente em saladas</Typography>
-        </CardContent>
+          <Box width={[1]}>{description}</Box>
+        </Flex>
       </CardActionArea>
 
       <CardContent>
-        <CardActions disableSpacing>
-          <IconButton aria-label="delete" color='primary' size='small'>
-            <DeleteIcon />
-          </IconButton>
-
-          <IconButton aria-label="edit" size='small'>
-            <EditIcon />
-          </IconButton>
-
-          <Typography style={{marginLeft: 'auto'}}><b>Média</b> R$ 1.99</Typography>
-          </CardActions>
-        </CardContent>
+        <Flex flexWrap="wrap">
+          <Box width={[1 / 2]}>{description}</Box>
+          <Box width={[1 / 4]}>{average_price}</Box>
+          <Box width={[1 / 4]}>{measurement}</Box>
+        </Flex>
+      </CardContent>
     </Card>
-  );
+  )
 }

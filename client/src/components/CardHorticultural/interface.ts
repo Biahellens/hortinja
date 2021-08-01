@@ -1,16 +1,11 @@
-import { ThemeOptions } from '@material-ui/core/styles'
-
-import {
-  CardProps as CardPropsMI,
-  TypographyProps as TypographyPropsMI
-} from '@material-ui/core'
-
-export type CardProps = CardPropsMI & {
-  theme: ThemeOptions
+export interface CardHorticulturalProps {
+  id: string
+  name: string
+  category: string
+  shade?: string
+  image: string
+  description?: string
+  average_price: number
+  measurement: string
+  benefits?: string
 }
-
-export type TypographyProps = TypographyPropsMI & {
-  theme: ThemeOptions
-}
-
-export {}
