@@ -7,7 +7,12 @@ import { CategoryProps } from './interface'
 
 //componentes
 import { Button, IconButton, Typography } from '@material-ui/core'
-import { CardInfo, ToolbarHome, BlockHorticulturies } from '../../components'
+import {
+  CardInfo,
+  ToolbarHome,
+  BlockHorticulturies,
+  ModalHorticultural,
+} from '../../components'
 import { Container, Wrapper } from './style'
 
 //icone
@@ -17,8 +22,13 @@ import AddIcon from '@material-ui/icons/Add'
 import { specificAxios } from '../../services/api'
 
 export const Home = (): JSX.Element => {
+  const [stateModalHorticultural, setStateModalHorticultural] = useState(false)
   const [categories, setcategories] = useState<CategoryProps[]>([])
   const [loading, setLoading] = useState(true)
+
+  function closeModal(): void {
+    setStateModalHorticultural(false)
+  }
 
   useEffect(() => {
     specificAxios
@@ -72,6 +82,7 @@ export const Home = (): JSX.Element => {
               variant="contained"
               color="primary"
               style={{ width: '80%', height: '5vh', borderRadius: '4vh' }}
+              onClick={() => setStateModalHorticultural(true)}
             >
               <IconButton>
                 <AddIcon />
@@ -103,6 +114,11 @@ export const Home = (): JSX.Element => {
           )}
         </>
       )}
+      <ModalHorticultural
+        id="create"
+        open={stateModalHorticultural}
+        handleClose={closeModal}
+      />
     </Wrapper>
   )
 }

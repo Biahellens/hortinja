@@ -7,7 +7,8 @@ import {
   Typography as TypographyMI,
 } from '@material-ui/core'
 
-import { CardProps, CardContentProps, TypographyProps } from './interface'
+// interfaces
+import { CardProps, CardContentProps, TypographyProps } from '@material-ui/core'
 
 export const CardImage = styled.div`
   height: '140vh';

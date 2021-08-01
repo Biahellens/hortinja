@@ -1,5 +1,5 @@
 // dependencies
-import React, { FC } from 'react'
+import React, { FC, useState } from 'react'
 
 import { CardHorticulturalProps } from './interface'
 
@@ -15,7 +15,7 @@ import {
 import {} from './style'
 
 // Modais
-// import { ModalEdit } from './ModalEdit'
+import { ModalHorticultural } from '../ModalHorticultural'
 
 //icons
 import Background from '../../assets/Images/Background_card.png'
@@ -26,51 +26,73 @@ export const CardHorticultural: FC<CardHorticulturalProps> = ({
   image,
   name,
   description,
+  category,
+  id,
 }: CardHorticulturalProps) => {
+  const [statusModal, setStateModal] = useState(false)
+
+  function closeModal(): void {
+    setStateModal(false)
+  }
+
   return (
-    <Card
-      style={{
-        borderRadius: 25,
-      }}
-    >
-      <CardContent
+    <>
+      <Card
         style={{
-          margin: 10,
           borderRadius: 25,
-          backgroundImage: `url(${Background})`,
         }}
       >
-        <Flex flexWrap="wrap">
-          <Box width={[1, 1 / 2]}>
-            <Avatar
-              src={image}
-              style={{
-                width: 50,
-                height: 50,
-              }}
-            />
-          </Box>
-          <Box width={[1, 1 / 2]} justifyContent="center" height="auto">
-            <Typography variant="h5">{name}</Typography>
-          </Box>
-        </Flex>
-      </CardContent>
+        <CardContent
+          style={{
+            margin: 10,
+            borderRadius: 25,
+            backgroundImage: `url(${Background})`,
+          }}
+        >
+          <Flex flexWrap="wrap">
+            <Box width={[1, 1 / 2]}>
+              <Avatar
+                src={image}
+                style={{
+                  width: 50,
+                  height: 50,
+                }}
+              />
+            </Box>
+            <Box width={[1, 1 / 2]} justifyContent="center" height="auto">
+              <Typography variant="h5">{name}</Typography>
+            </Box>
+          </Flex>
+        </CardContent>
 
-      <CardActionArea style={{ margin: 10, padding: 10 }}>
-        <Flex flexWrap="wrap">
-          <Box width={[1]}>{name}</Box>
+        <CardActionArea style={{ margin: 10, padding: 10 }}>
+          <Flex flexWrap="wrap" onClick={() => setStateModal(true)}>
+            <Box width={[1]}>{name}</Box>
 
-          <Box width={[1]}>{description}</Box>
-        </Flex>
-      </CardActionArea>
+            <Box width={[1]}>{description}</Box>
+          </Flex>
+        </CardActionArea>
 
-      <CardContent>
-        <Flex flexWrap="wrap">
-          <Box width={[1 / 2]}>{description}</Box>
-          <Box width={[1 / 4]}>{average_price}</Box>
-          <Box width={[1 / 4]}>{measurement}</Box>
-        </Flex>
-      </CardContent>
-    </Card>
+        <CardContent>
+          <Flex flexWrap="wrap">
+            <Box width={[1 / 2]}>{description}</Box>
+            <Box width={[1 / 4]}>{average_price}</Box>
+            <Box width={[1 / 4]}>{measurement}</Box>
+          </Flex>
+        </CardContent>
+      </Card>
+
+      <ModalHorticultural
+        open={statusModal}
+        handleClose={closeModal}
+        average_price={average_price}
+        measurement={measurement}
+        image={image}
+        name={name}
+        description={description}
+        category={category}
+        id={id}
+      />
+    </>
   )
 }
